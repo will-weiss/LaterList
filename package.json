@@ -1,0 +1,47 @@
+{
+  "name": "LaterList",
+  "version": "0.1.0",
+  "description": "LaterList: Eventual Arrays with a Familiar API",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha -- -R spec --recursive test",
+    "prepublish": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/will-weiss/LaterList"
+  },
+  "keywords": [
+    "later",
+    "list",
+    "array",
+    "async",
+    "stream",
+    "relay",
+    "flood"
+  ],
+  "author": "Will Weiss <william.t.weiss@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/will-weiss/LaterList/issues"
+  },
+  "homepage": "https://github.com/will-weiss/LaterList",
+  "devDependencies": {
+    "bluebird": "2.9.16",
+    "browserify": "9.0.3",
+    "chai": "2.0.0",
+    "chai-as-promised": "4.2.0",
+    "gulp": "3.8.11",
+    "gulp-istanbul": "0.6.0",
+    "gulp-istanbul-enforcer": "1.0.3",
+    "gulp-mocha": "2.0.0",
+    "gulp-rename": "1.2.0",
+    "gulp-uglify": "1.1.0",
+    "istanbul": "0.3.8",
+    "mocha": "2.1.0",
+    "vinyl-transform": "1.0.0"
+  }
+}
