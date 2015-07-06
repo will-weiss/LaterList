@@ -47,17 +47,10 @@ describe('Listener', function() {
 		});
 		it('should override its methods on end', function() {
 			listener.end();
-			listener.onData.should.equal(u.noop);
-			listener.set.should.equal(u.noop);
-			listener.listen.should.equal(u.noop);
-			listener.end.should.equal(u.noop);
-			listener.shift.should.equal(u.noop);
-			listener.close.should.equal(u.noop);
-			listener.pend.should.equal(u.noop);
-			listener.exit.should.equal(u.noop);
-			listener.push.should.equal(u.noop);
-			listener.setIndex.should.equal(u.noop);
-			listener.after.should.equal(u.noop);
+			['onData', 'set', 'listen', 'end', 'shift', 'close', 'pend', 'exit',
+				'push', 'setIndex', 'after' ].forEach(function(fn) {
+					listener[fn].should.equal(u.noop);
+			});
 		});
 		it('should call its onEnd method on end', function() {
 			var onEndSpy = sinon.spy(listener, "onEnd");
@@ -139,10 +132,10 @@ describe('Listener', function() {
 			});
 		});
 		it('should pend when the list has not ended and there are no ' +
-			 'nodes to process', function() {
-			var list = new LaterList();
-			var listener = new Listener(list, u.noop, u.noop);
-			list._state.pending.should.equal(listener);
+			'nodes to process', function() {
+				var list = new LaterList();
+				var listener = new Listener(list, u.noop, u.noop);
+				list._state.pending.should.equal(listener);
 		});
 	});
 });

@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/will-weiss/LaterList",
   "devDependencies": {
-    "bluebird": "2.9.16",
+    "bluebird": "2.9.32",
     "browserify": "9.0.3",
     "chai": "2.0.0",
     "chai-as-promised": "4.2.0",
@@ -43,6 +43,7 @@
     "istanbul": "0.3.8",
     "mocha": "2.1.0",
     "sinon": "1.15.4",
+    "sinon-as-promised": "^4.0.0",
     "sinon-chai": "2.8.0",
     "vinyl-transform": "1.0.0"
   }
