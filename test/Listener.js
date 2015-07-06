@@ -8,9 +8,7 @@ var chai = require('chai'),
 	sinon = require("sinon"),
 	sinonChai = require("sinon-chai"),
 	u = require('../lib/utils'),
-	State = require('../lib/State'),
-	Node = require('../lib/Node'),
-	LaterList = require('../lib/LaterList'),
+	LaterList = require('../lib/interface'),
 	Listener = require('../lib/Listener');
 
 var should = chai.should();

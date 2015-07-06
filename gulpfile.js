@@ -22,7 +22,7 @@ gulp.task('dist', function() {
     b.require(path.basename(filename, '.js'));
     return b.bundle();
   });
-  return gulp.src('index.js')
+  return gulp.src('lib/index.js')
     .pipe(browserified)
     .pipe(uglify())
     .pipe(rename({

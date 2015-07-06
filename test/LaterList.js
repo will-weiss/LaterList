@@ -8,8 +8,8 @@ var chai = require('chai'),
   sinon = require("sinon"),
   sinonChai = require("sinon-chai"),
   u = require('../lib/utils'),
-  Relay = require('../index').Relay,
-  Flood = require('../index').Flood;
+  Relay = require('../lib/Relay'),
+  Flood = require('../lib/Flood');
 
 var should = chai.should();
 chai.use(chaiAsPromised);
