@@ -33,16 +33,6 @@ gulp.task('dist', function() {
 });
 
 gulp.task('coverage-test', function(cb) {
-  var passThresholds = {
-    thresholds : {
-      statements : 95,
-      branches : 88,
-      lines : 95,
-      functions : 92
-    },
-    coverageDirectory : 'coverage',
-    rootDirectory : ''
-  };
   gulp.src(['test/**/*.js'])
     .pipe(mocha())
     .on('end', function() {
@@ -57,7 +47,6 @@ gulp.task('coverage-test', function(cb) {
             }))
             .on('finish', function() {
               gulp.src('.')
-                .pipe(coverageEnforcer(passThresholds))
                 .on('end', cb);
             });
         });
