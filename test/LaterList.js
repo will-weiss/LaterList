@@ -93,7 +93,6 @@ var assertions = {
         list.atIndex(0).should.equal(1);
         list.atIndex(1).should.equal(2);
         list.atIndex(2).should.equal(3);
-        console.log("AT 3")
         should.not.exist(list.atIndex(3));
     });
   },
@@ -437,6 +436,10 @@ var assertions = {
     it('should slice until the end of the list when there is ' +
       'no second argument', function() {
         return list.slice(5).value().should.eventually.deep.equal([5,6,7]);
+    });
+    it('a non-Number second argument should be interpreted as 0', function() {
+        return list.slice(0, 'apple').value()
+          .should.eventually.deep.equal([]);
     });
     it('should default the first argument to zero', function() {
       return list.slice().value()
