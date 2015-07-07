@@ -198,6 +198,23 @@ var assertions = {
     });
   },
 
+  when: function(ctor) {
+    it('should resolve with undefined when the list ends with no ' +
+      'error', function() {
+        return ctor.from([]).when().should.eventually.become(undefined);
+    });
+    it('should return identical promises when called more than once',
+      function() {
+        var list = ctor.from([]);
+        return list.when().should.equal(list.when());
+    });
+    it('should reject with the error of a list', function() {
+      var list = new ctor();
+      list.end(new Error());
+      return list.when().should.eventually.be.rejected;
+    });
+  },
+
   close: function(ctor) {
     var list = ctor.from([1,2,3]);
     it('should remove the reference to the head of the list', function() {
