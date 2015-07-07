@@ -95,22 +95,26 @@ describe('Listener', function() {
 	});
 	describe('listen', function() {
 		it('should call error when the list has an error', function() {
-			var called, calledArgs, list = new LaterList();
-			var fns = {
-				onData: function() {
-					called = 'onData';
-					calledArgs = Array.prototype.slice.call(arguments);
-				},
-				onEnd: function() {
-					called = 'onEnd';
-					calledArgs = Array.prototype.slice.call(arguments);
-				}
-			};
+			var list = new LaterList();
+			var fns = {};
+			// Bind the functions so that they can be spied on. Otherwise, the
+			// listener will use functions bound to itself, which would not be
+			// identical.
+			fns.onData = u.noop.bind(fns);
+			fns.onEnd = u.noop.bind(fns);
+			onDataSpy = sinon.spy(fns, 'onData');
+			onEndSpy = sinon.spy(fns, 'onEnd');
+			onDataSpy.callCount.should.equal(0);
+			onEndSpy.callCount.should.equal(0);
 			var myError = new Error();
 			list.end(myError);
 			var listener = new Listener(list, fns.onData, fns.onEnd);
-			called.should.equal('onEnd');
-			calledArgs.should.deep.equal([myError]);
+			// onData is never called.
+			onDataSpy.callCount.should.equal(0);
+			// onEnd is called once,
+			onEndSpy.callCount.should.equal(1);
+			// with the list's error.
+			onEndSpy.calledWithExactly(myError);
 		});
 		it('should shift when there is a next node', function() {
 			var list = new LaterList();

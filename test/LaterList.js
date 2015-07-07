@@ -22,11 +22,11 @@ function delay(result) {
   return new Promise(function(resolve) {
     setTimeout(resolve.bind(Promise, result), 0);
   });
-};
+}
 
 function add(a, b) {
   return delay(a + b);
-};
+}
 
 function isOdd(n) {
   return delay(n % 2 === 1);
@@ -56,6 +56,8 @@ function testTail(list, desired) {
   tail.value.should.equal(lastVal);
 }
 
+var laterListCtors = [Relay, Flood];
+
 var assertions = {
 
   length: function(ctor) {
@@ -67,11 +69,11 @@ var assertions = {
   push: function(ctor) {
     var list = new ctor();
     var desired = [1,2,3,4,5];
-    it('should update the length', function() {
+    it('should update and respond with the length', function() {
       list.should.have.length(0);
-      list.push(1,2,3);
+      list.push(1,2,3).should.equal(3);
       list.should.have.length(3);
-      list.push(4,5);
+      list.push(4,5).should.equal(5);
       list.should.have.length(5);
     });
     it('should update the head', function() {
@@ -91,34 +93,100 @@ var assertions = {
         list.atIndex(0).should.equal(1);
         list.atIndex(1).should.equal(2);
         list.atIndex(2).should.equal(3);
+        console.log("AT 3")
         should.not.exist(list.atIndex(3));
     });
   },
 
+  end: function(ctor) {
+    it('should set the list\'s state to ended', function() {
+      var list = new ctor();
+      list._state.ended.should.equal(false);
+      list.push(1,2,3);
+      list._state.ended.should.equal(false);
+      list.end();
+      list._state.ended.should.equal(true);
+    });
+    it('should not set the list\'s error if called no arguments', function() {
+      var list = new ctor();
+      should.not.exist(list._state.error);
+      list.end();
+      should.not.exist(list._state.error);
+    });
+    it('should set the list\'s error if called an argument', function() {
+      var list = new ctor();
+      var err = new Error();
+      should.not.exist(list._state.error);
+      list.end(err);
+      list._state.error.should.equal(err);
+    });
+  },
+
+  consume: function(ctor) {
+    var list = new ctor();
+    list.push(1,2,3,4);
+    list.end();
+    it('should resolve with the value of the listener when there is ' +
+      'no error', function() {
+        return list.consume(u.noop, 5).should.eventually.become(5);
+    });
+    it('should reject when an error is thrown', function() {
+      var callCount = 0;
+      function throwOnThird() {
+        if (++callCount === 3)
+          throw new Error();
+      }
+      return list.consume(throwOnThird, 5).should.eventually.be.rejected;
+    });
+  },
+
+  value: function(ctor) {
+    it('should resolve with its values as an array', function() {
+      var list = new ctor();
+      list.push(1,2,3);
+      list.end();
+      return list.value().should.eventually.deep.equal([1,2,3]);
+    });
+  },
+
   from: function(ctor) {
-    var desired = [1,2,3];
-    it('should create a new ended ' + ctor.name + ' from a supplied array',
-      function() {
-        var list = ctor.from(desired);
+    // Tests construction of a LaterList from a given constructor
+    function testConstructingFrom(testCtor) {
+      // When constructing from an Array expect the resulting LaterList to be
+      // ended immediately, but not if constructing from a LaterList.
+      var expectImmediateEnd   = testCtor === Array;
+      // LaterLists need to be explicitly ended, Arrays do not.
+      var endListLikeNecessary = testCtor !== Array;
+      // Verifies that the list constructed has a value of the desired list.
+      function verifyList(listLike, list, desired) {
         list.should.be.an.instanceof(ctor);
-        list._state.ended.should.equal(true);
-        testHead(list, desired);
-        testTail(list, desired);
-    });
-    it('should create a new ended ' + ctor.name + ' from a supplied ' +
-      ctor.name, function() {
-        var origList = new ctor();
-        origList.push(1,2,3);
-        var newList = ctor.from(origList);
-        newList.should.be.an.instanceof(ctor);
-        newList._state.ended.should.equal(false);
-        origList.end();
-        return origList.value().then(function() {
-          testHead(newList, desired);
-          testTail(newList, desired);
-          return newList._state.ended.should.equal(true);
+        list._state.ended.should.equal(expectImmediateEnd);
+        if (endListLikeNecessary)
+          listLike.end();
+        return list.value().then(function(arr) {
+          arr.should.deep.equal(desired);
+          return list._state.ended.should.equal(true);
         });
-    });
+      }
+      it('should create a new ' + ctor.name + ' from a supplied ' +
+        testCtor.name, function() {
+          var listLike = new testCtor();
+          listLike.push(1,2,3);
+          var list = ctor.from(listLike);
+          return verifyList(listLike, list, [1,2,3]);
+      });
+      it('should apply a map function over a context if supplied', function() {
+        function doubleAndAddContextNum(n) {
+          return delay(2 * n + this.num);
+        }
+        var listLike = new testCtor();
+        listLike.push(1,2,3);
+        var list = ctor.from(listLike, doubleAndAddContextNum, {num: 3});
+        return verifyList(listLike, list, [5,7,9]);
+      });
+    }
+    // Test constructing LaterLists from other LaterLists and Arrays.
+    laterListCtors.concat(Array).forEach(testConstructingFrom);
   },
 
   of: function(ctor) {
@@ -126,18 +194,14 @@ var assertions = {
       ' arguments', function() {
       var list = ctor.of(1,2,3);
       list._state.ended.should.equal(true);
-      should.not.exist(list.atIndex(-1));
-      list.atIndex(0).should.equal(1);
-      list.atIndex(1).should.equal(2);
-      list.atIndex(2).should.equal(3);
-      should.not.exist(list.atIndex(3));
+      return list.value().should.eventually.deep.equal([1,2,3]);
     });
   },
 
   close: function(ctor) {
     var list = ctor.from([1,2,3]);
     it('should remove the reference to the head of the list', function() {
-      list._headRef.should.exist;
+      should.exist(list._headRef);
       list.close();
       should.not.exist(list._headRef);
     });
@@ -170,35 +234,6 @@ var assertions = {
       list.end(err);
       var newList = list.link(u.noop);
       return newList._state.error.should.equal(err);
-    });
-  },
-
-  consume: function(ctor) {
-    var list = ctor.from([1,2,3,4]);
-    it('should resolve with the value of the listener when there is ' +
-      'no error', function() {
-        return list.consume(u.noop, 5).should.eventually.become(5);
-    });
-    it('should reject when an error is thrown', function() {
-      var callCount = 0;
-      function throwOnThird() {
-        if (++callCount === 3)
-          throw new Error();
-      }
-      return list.consume(throwOnThird, 5).should.eventually.be.rejected;
-    });
-  },
-
-  value: function(ctor) {
-    it('should resolve with its values as an array', function() {
-      return ctor.from([1,2,3]).value().should.eventually.deep.equal([1,2,3]);
-    });
-    it('should resolve with its values on push', function() {
-      var list = new ctor();
-      list.push(1,2,3);
-      list.push(4,5);
-      list.end();
-      return list.value().should.eventually.deep.equal([1,2,3,4,5]);
     });
   },
 
@@ -360,9 +395,16 @@ var assertions = {
       return testHead(reversed, desired);
     });
     it('should have a correct tail', function() {
-      var tail = reversed._tail;
-      tail.value.should.equal(1);
-      tail.index.should.equal(2);
+      return testTail(reversed, desired);
+    });
+    it('should have length zero until the source list has ended', function() {
+      var source = new ctor();
+      var otherReversed = source.reverse();
+      otherReversed.should.have.length(0);
+      source.push(1,2,3);
+      otherReversed.should.have.length(0);
+      source.end();
+      return otherReversed.value().should.eventually.deep.equal(desired);
     });
   },
 
@@ -383,9 +425,28 @@ var assertions = {
       return list.slice().value()
         .should.eventually.deep.equal([0,1,2,3,4,5,6,7]);
     });
+    it('should slice correctly when the list has not yet ended', function() {
+      var list = new ctor();
+      setTimeout(list.end, 0);
+      list.push(0,1,2,3,4,5,6,7);
+      return list.slice(2, 5).value()
+        .should.eventually.deep.equal([2,3,4]);
+    });
     it('should return an empty list when the end index is less than ' +
       'the start', function() {
         return list.slice(4, 1).value().should.eventually.deep.equal([]);
+    });
+    it('should correctly slice from negative indexes', function() {
+        return list.slice(-4).value()
+          .should.eventually.deep.equal([4,5,6,7]);
+    });
+    it('should correctly slice from negative indexes of a non-' +
+      'ended list', function() {
+        var list = new ctor();
+        setTimeout(list.end, 0);
+        list.push(0,1,2,3,4,5,6,7);
+        return list.slice(-4, -2).value()
+          .should.eventually.deep.equal([4,5]);
     });
   },
 
@@ -415,6 +476,15 @@ var assertions = {
     });
     it('should have the right value', function() {
       return sorted.value().should.eventually.deep.equal(desired);
+    });
+    it('should have length zero until the source list has ended', function() {
+      var source = new ctor();
+      var otherSorted = source.reverse();
+      otherSorted.should.have.length(0);
+      source.push(3,2,1);
+      otherSorted.should.have.length(0);
+      source.end();
+      return otherSorted.value().should.eventually.deep.equal(desired);
     });
   },
 
@@ -449,6 +519,7 @@ var assertions = {
 
 };
 
+// Tests the assertions for a given LaterList constructor
 function testLaterList(ctor) {
   Object.keys(assertions).forEach(function(toDescribe) {
     describe(toDescribe, function() {
@@ -458,7 +529,7 @@ function testLaterList(ctor) {
 }
 
 describe('LaterList', function() {
-  [Relay, Flood].forEach(function(ctor) {
+  laterListCtors.forEach(function(ctor) {
     describe(ctor.name, function() {
       return testLaterList(ctor);
     });
