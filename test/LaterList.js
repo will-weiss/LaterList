@@ -468,6 +468,14 @@ var assertions = {
         return list.slice(-4, -2).value()
           .should.eventually.deep.equal([4,5]);
     });
+    it('should return an empty list when the original list ends later such ' +
+      'that the resulting slice has no size', function() {
+        var list = new ctor();
+        setTimeout(list.end, 0);
+        list.push(0,1,2,3,4,5,6,7);
+        return list.slice(-3, 2).value()
+          .should.eventually.deep.equal([]);
+    });
   },
 
   some: function(ctor) {
@@ -516,10 +524,22 @@ var assertions = {
     it('should delete and insert as appropriate', function() {
       return spliced.value().should.eventually.deep.equal([1,2,'apple',5]);
     });
+    it('should respond back with a list with the same values if there are no' +
+      'insertions or deletions', function() {
+        return ctor.of(1,2,3).splice(2,0).value()
+          .should.eventually.deep.equal([1,2,3]);
+    });
     it('should not delete all remaining elements if no second argument ' +
       'is given', function() {
         return ctor.from([1,2,3,4]).splice(2).value()
           .should.eventually.deep.equal([1,2]);
+    });
+    it('should splice a list that has not yet ended', function() {
+      var list = new ctor();
+      list.push(1,2,3,4,5);
+      setTimeout(list.end, 0);
+      return list.splice(2,2,'apple').value()
+        .should.eventually.deep.equal([1,2,'apple',5]);
     });
     it('should properly insert values when no elements are deleted',
       function() {
@@ -534,6 +554,28 @@ var assertions = {
     it('should interpret a non-Number first argument as zero', function() {
       return ctor.from([1,2,3,4]).splice(null, 2).value()
         .should.eventually.deep.equal([3, 4]);
+    });
+    it('should splice properly when the first argument is negative',
+      function() {
+        var list = new ctor();
+        list.push(1,2,3,4,5);
+        setTimeout(list.end, 0);
+        return list.splice(-3,2,'apple').value()
+          .should.eventually.deep.equal([1,2,'apple',5]);
+    });
+    it('should splice a list properly when the first argument is greater that' +
+      'the length of the list', function() {
+        return ctor.of(1,2,3,4,5).splice(8, 1, 'apple').value()
+          .should.eventually.deep.equal([1,2,3,4,5,'apple']);
+    });
+    it('should delete no elements when the second argument is negative',
+      function() {
+        return ctor.of(1,2,3).splice(0,-1,'apple').value()
+          .should.eventually.deep.equal(['apple',1,2,3]);
+    });
+    it('should correctly splice from zero', function() {
+      return ctor.of(1,2,3).splice(0,0,'apple').value()
+        .should.eventually.deep.equal(['apple',1,2,3]);
     });
   }
 
