@@ -408,8 +408,8 @@ var assertions = {
     it('should have a correct head', function() {
       return testHead(reversed, desired);
     });
-    it('should have a correct tail', function() {
-      return testTail(reversed, desired);
+    it('should reverse an empty list', function() {
+      return ctor.of().reverse().value().should.eventually.deep.equal([]);
     });
     it('should have length zero until the source list has ended', function() {
       var source = new ctor();
