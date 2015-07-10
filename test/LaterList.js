@@ -505,7 +505,7 @@ var assertions = {
     });
     it('should have length zero until the source list has ended', function() {
       var source = new ctor();
-      var otherSorted = source.reverse();
+      var otherSorted = source.sort();
       otherSorted.should.have.length(0);
       source.push(3,2,1);
       otherSorted.should.have.length(0);
