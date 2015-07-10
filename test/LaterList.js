@@ -106,6 +106,14 @@ var assertions = {
       list.end();
       list._state.ended.should.equal(true);
     });
+    it('should remove the reference to the tail', function() {
+      var list = new ctor();
+      should.exist(list._tail);
+      list.push(1,2,3);
+      should.exist(list._tail);
+      list.end();
+      should.not.exist(list._tail);
+    });
     it('should not set the list\'s error if called no arguments', function() {
       var list = new ctor();
       should.not.exist(list._state.error);
@@ -409,9 +417,6 @@ var assertions = {
     });
     it('should have a correct head', function() {
       return testHead(reversed, desired);
-    });
-    it('should have a correct tail', function() {
-      return testTail(reversed, desired);
     });
     it('should have length zero until the source list has ended', function() {
       var source = new ctor();
