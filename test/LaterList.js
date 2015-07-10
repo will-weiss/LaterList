@@ -44,7 +44,6 @@ function testHead(list, desired) {
     while (count-- > 0)
       ref = ref.next;
     ref.value.should.equal(value);
-    ref.index.should.equal(index);
   });
 }
 
@@ -52,7 +51,6 @@ function testTail(list, desired) {
   var tail = list._tail;
   var lastIx = desired.length - 1;
   var lastVal = desired[lastIx];
-  tail.index.should.equal(lastIx);
   tail.value.should.equal(lastVal);
 }
 
