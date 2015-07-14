@@ -59,7 +59,7 @@ describe('Listener', function() {
 			[1,2,3].forEach(function(value, index) {
 				listener.shift();
 				listener.node.value.should.equal(value);
-				listener.node.index.should.equal(index);
+				listener.index.should.equal(index);
 			});
 		});
 		it('should close', function() {

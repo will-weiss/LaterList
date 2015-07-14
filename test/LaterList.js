@@ -44,7 +44,6 @@ function testHead(list, desired) {
     while (count-- > 0)
       ref = ref.next;
     ref.value.should.equal(value);
-    ref.index.should.equal(index);
   });
 }
 
@@ -52,7 +51,6 @@ function testTail(list, desired) {
   var tail = list._tail;
   var lastIx = desired.length - 1;
   var lastVal = desired[lastIx];
-  tail.index.should.equal(lastIx);
   tail.value.should.equal(lastVal);
 }
 
@@ -417,6 +415,9 @@ var assertions = {
     });
     it('should have a correct head', function() {
       return testHead(reversed, desired);
+    });
+    it('should reverse an empty list', function() {
+      return ctor.of().reverse().value().should.eventually.deep.equal([]);
     });
     it('should have length zero until the source list has ended', function() {
       var source = new ctor();
