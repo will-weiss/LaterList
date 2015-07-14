@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: interface/index.js</h1>
 
-    
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/*
@@ -155,7 +155,7 @@ LaterList.prototype.end = function(err) {
  * supplied onData function to each node of this list.
  * @param  {function(*,Number)} onData A function to process nodes of this list
  *                                     executed in the context of the listener.
- * @return {LaterList} A LaterList of the same subclass as this list.
+ * @return LaterList A LaterList of the same subclass as this list.
  */
 LaterList.prototype.link = function(onData) {
   var list = new this.constructor();
@@ -223,7 +223,7 @@ LaterList.prototype.atIndex = function(index) {
  * Creates a new LaterList instance from an list-like object with a forEach
  * method. The new list ends when the execution of forEach resolves.
  * @param  {Object.&lt;{forEach: function}>} from An object to create a list from.
- * @return {LaterList} An instance of LaterList whose nodes have values equal to
+ * @return LaterList An instance of LaterList whose nodes have values equal to
  *                     those of the supplied list-like.
  */
 LaterList.from = function(from) {
@@ -236,7 +236,7 @@ LaterList.from = function(from) {
 /**
  * Creates a new LaterList instance with a variable number of arguments.
  * @param {...*} values The values to add to a new list.
- * @return {LaterList} An instance of LaterList whose nodes have values equal to
+ * @return LaterList An instance of LaterList whose nodes have values equal to
  *                     those of the supplied arguments.
  */
 LaterList.of = function(/* values */) {

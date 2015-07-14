@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: interface/proto.js</h1>
 
-    
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/*
@@ -44,7 +44,7 @@ var proto = {
    * the list-like(s) and/or value(s) provided as arguments.
    * @param  {...Object.&lt;{forEach: function}>} lists list-likes to concatenate
    *                                                 to this list.
-   * @return {LaterList} A list whose nodes have the concatenated values of the
+   * @return LaterList A list whose nodes have the concatenated values of the
    *                     supplied arguments.
    */
   concat: function(/* lists */) {
@@ -80,7 +80,7 @@ var proto = {
    * @param  {?Object}            thisArg Optional. Value to use as this when
    *                                      executing the predicate.
    * @lends  {LaterList.prototype}
-   * @return {LaterList} A list with the filtered values of the original list.
+   * @return LaterList A list with the filtered values of the original list.
    */
   filter: function(predicate, thisArg) {
     return this.link(u.fork(predicate.bind(thisArg), lProto.push));
@@ -187,7 +187,7 @@ var proto = {
    * @param  {?Object}            thisArg Optional. Value to use as this when
    *                                      executing the lambda.
    * @lends  {LaterList.prototype}
-   * @return {LaterList} A new list with the results of mapping the lambda over
+   * @return LaterList A new list with the results of mapping the lambda over
    *                     this list.
    */
   map: function(lambda, thisArg) {
@@ -234,7 +234,7 @@ var proto = {
    * node and can only complete when the list has ended. As this is
    * computationally expensive, finding other approaches is recommended.
    * @lends  {LaterList.prototype}
-   * @return {LaterList} A new list with the values of this list reversed.
+   * @return LaterList A new list with the values of this list reversed.
    */
   reverse: function() {
     var reversedList = new this.constructor();
@@ -256,7 +256,7 @@ var proto = {
    * @param  {?Number} begin An index to begin at.
    * @param  {?Number} end   An index to end at.
    * @lends  {LaterList.prototype}
-   * @return {LaterList} A list with the sliced portion of this list.
+   * @return LaterList A list with the sliced portion of this list.
    */
   slice: function(begin, end) {
     var start = (begin >= 0) ? parseInt(begin, 10) : 0,
@@ -297,7 +297,7 @@ var proto = {
    * approaches is recommended.
    * @param  {?Function} compare Optional. A function on which to sort.
    * @lends {LaterList.prototype}
-   * @return {LaterList} A new list with sorted values from this list.
+   * @return LaterList A new list with sorted values from this list.
    */
   sort: function(compare) {
     var sortedList = new this.constructor();
@@ -316,7 +316,7 @@ var proto = {
    * @param  {?Number} deleteCount The number of elements to remove.
    * @param  {...*}    additions   Values to add to the list.
    * @lends {LaterList.prototype}
-   * @return {LaterList} A new list with the modified values from this list.
+   * @return LaterList A new list with the modified values from this list.
    */
   splice: function(begin, deleteCount /* additions */) {
     var len = arguments.length;
