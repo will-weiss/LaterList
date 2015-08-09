@@ -1,6 +1,6 @@
 {
   "name": "laterlist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LaterList: Eventual Arrays with a Familiar API",
   "main": "lib/index.js",
   "directories": {
