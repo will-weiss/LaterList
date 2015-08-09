@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "istanbul cover _mocha -- -R spec --recursive test",
-    "prepublish": "gulp",
-    "docs": "jsdoc2md lib/**/*.js > api.md"
+    "prepublish": "gulp"
   },
   "repository": {
     "type": "git",
