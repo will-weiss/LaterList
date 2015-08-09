@@ -6,7 +6,12 @@
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
-  "plugins": [],
+  "plugins": [ "plugins/markdown" ],
+
+  "markdown": {
+      "parser": "gfm",
+      "hardwrap": true
+  },
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,
