@@ -11,7 +11,8 @@ npm install LaterList
 ```
 
 # Usage
-<code>var Flood = require('LaterList').Flood
+```javascript
+var Flood = require('LaterList').Flood
 
 // Works like an array
 Flood.of(1,2,3,4,5)
@@ -29,9 +30,7 @@ Flood.from(someUserIds)
   .reduce(function(pageViews, user) {
     return pageViews + user.pageViews;
   }, 0).then(console.log) // Sum total of page views of those users.
-
-</code>
-
+```
 
 # Source
 
@@ -159,8 +158,8 @@ values. There are however some differences that make LaterList useful.</p>
 ## LaterList/Flood ⇐ <code>[LaterList](#LaterList)</code>
 A Flood is a LaterList for which values are processed immediately.
 
-**Kind**: global class  
-**Extends:** <code>[LaterList](#LaterList)</code>  
+**Kind**: global class
+**Extends:** <code>[LaterList](#LaterList)</code>
 
 * [LaterList/Flood](#LaterList/Flood) ⇐ <code>[LaterList](#LaterList)</code>
   * [.length](#LaterList+length) : <code>Number</code>
@@ -197,13 +196,13 @@ A Flood is a LaterList for which values are processed immediately.
 ### laterList/Flood.length : <code>Number</code>
 Number of nodes in the list.
 
-**Kind**: instance property of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance property of <code>[LaterList/Flood](#LaterList/Flood)</code>
 <a name="LaterList/Flood+addListener"></a>
 ### laterList/Flood.addListener(onData, onEnd, initialValue)
 Adds a listener which processes values of this flood as soon as they
 arrive.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -215,8 +214,8 @@ arrive.
 ### laterList/Flood.push(...values) ⇒ <code>Number</code>
 Adds a values to the list's tail. Pending listeners are revived and shifted.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Number</code> - The new length of the list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Number</code> - The new length of the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -226,7 +225,7 @@ Adds a values to the list's tail. Pending listeners are revived and shifted.
 ### laterList/Flood.revive(fn, err)
 Executes a Listener.prototype function on each pending listener.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -241,7 +240,7 @@ listeners. If no argument is present, listeners will end when they have
 processed all nodes of the list. Subsequent calls of push and end on this
 list will throw.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -252,8 +251,8 @@ list will throw.
 Return a new LaterList instance whose nodes are the result of applying the
 supplied onData function to each node of this list.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: LaterList A LaterList of the same subclass as this list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: LaterList A LaterList of the same subclass as this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -267,13 +266,13 @@ be garbage colllected. Subsequent calls of [close](#LaterList+close),
 [atIndex](#LaterList+atIndex) and adding of listeners on this list will throw as
 these methods require a reference to the list's head.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 <a name="LaterList+consume"></a>
 ### laterList/Flood.consume(onData, initialValue) ⇒ <code>Promise.&lt;\*&gt;</code>
 Returns a promise that resolves with the final value of a listener.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -284,15 +283,15 @@ Returns a promise that resolves with the final value of a listener.
 ### laterList/Flood.value() ⇒ <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code>
 Collect the nodes of the list as an array.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.
 <a name="LaterList+atIndex"></a>
 ### laterList/Flood.atIndex(index) ⇒ <code>\*</code>
 Looks up the value of the node at the supplied index. Returns undefined if
 the index is not a number or out of bounds.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>\*</code> - The value of the node at that index.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>\*</code> - The value of the node at that index.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -303,15 +302,15 @@ the index is not a number or out of bounds.
 Resolves with undefined if the list ends without error, rejects if the list
 ends with an error.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 <a name="LaterList+concat"></a>
 ### laterList/Flood.concat(...lists) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a new list comprised of the list on which it is called joined with
 the list-like(s) and/or value(s) provided as arguments.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A list whose nodes have the concatenated values of the
-                    supplied arguments.  
+                    supplied arguments.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -322,9 +321,9 @@ the list-like(s) and/or value(s) provided as arguments.
 Tests whether all nodes in the list pass the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for all nodes in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -336,8 +335,8 @@ provided function.
 Creates a new LaterList with all nodes that pass the test implemented by
 the provided function.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -349,8 +348,8 @@ the provided function.
 Returns a value in the list, if a node in the list satisfies the provided
 testing function. Otherwise undefined is returned.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -362,9 +361,9 @@ testing function. Otherwise undefined is returned.
 Returns an index in the list, if a node in the list satisfies the provided
 testing function. Otherwise -1 is returned.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 **Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node satisfying the
-                          predicate.  
+                          predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -375,8 +374,8 @@ testing function. Otherwise -1 is returned.
 ### laterList/Flood.forEach(lambda, thisArg) ⇒ <code>Promise.&lt;undefined&gt;</code>
 Executes a provided function once per node.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -388,8 +387,8 @@ Executes a provided function once per node.
 Determines whether a list includes a certain element, returning true or
 false as appropriate.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -401,8 +400,8 @@ false as appropriate.
 Returns the first index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -412,7 +411,7 @@ Returns the first index at which a given value can be found in the list, or
 ### laterList/Flood.join(separator) ⇒ <code>Promise.&lt;String&gt;</code>
 Joins all values of a list into a string.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -423,8 +422,8 @@ Joins all values of a list into a string.
 Returns the last index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -435,9 +434,9 @@ Returns the last index at which a given value can be found in the list, or
 Creates a new list with the results of calling a provided function on every
 node in this list.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A new list with the results of mapping the lambda over
-                    this list.  
+                    this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -449,8 +448,8 @@ node in this list.
 Applies a function against an accumulator and each node of the list (from
 left-to-right) has to reduce it to a single value.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -464,8 +463,8 @@ right-to-left) has to reduce it to a single value. Note that this operation
 can only commence when the list has ended and been reversed. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -479,14 +478,14 @@ becomes the first. Note that while this operation maintains a copy of each
 node and can only complete when the list has ended. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.
 <a name="LaterList+slice"></a>
 ### laterList/Flood.slice(begin, end) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a shallow copy of a portion of a list into a new list.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -498,9 +497,9 @@ Returns a shallow copy of a portion of a list into a new list.
 Tests whether some element in the list passes the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for some node in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -515,8 +514,8 @@ values of the list collected in an array before they are sorted and copied
 to the resulting list. As this is computationally expensive, finding other
 approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -527,8 +526,8 @@ approaches is recommended.
 Returns a new list with some nodes in this list removed and/or some nodes
 added.
 
-**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.  
+**Kind**: instance method of <code>[LaterList/Flood](#LaterList/Flood)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -541,8 +540,8 @@ added.
 A Relay is a LaterList for which order is preserved when listened
 to.
 
-**Kind**: global class  
-**Extends:** <code>[LaterList](#LaterList)</code>  
+**Kind**: global class
+**Extends:** <code>[LaterList](#LaterList)</code>
 
 * [LaterList/Relay](#LaterList/Relay) ⇐ <code>[LaterList](#LaterList)</code>
   * [.length](#LaterList+length) : <code>Number</code>
@@ -579,13 +578,13 @@ to.
 ### laterList/Relay.length : <code>Number</code>
 Number of nodes in the list.
 
-**Kind**: instance property of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance property of <code>[LaterList/Relay](#LaterList/Relay)</code>
 <a name="LaterList/Relay+addListener"></a>
 ### laterList/Relay.addListener(onData, onEnd, initialValue)
 Adds a listener which processes values of this relay when all prior values
 have been processed.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -597,8 +596,8 @@ have been processed.
 ### laterList/Relay.push(...values) ⇒ <code>Number</code>
 Adds a values to the list's tail. Pending listeners are revived and shifted.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Number</code> - The new length of the list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Number</code> - The new length of the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -608,7 +607,7 @@ Adds a values to the list's tail. Pending listeners are revived and shifted.
 ### laterList/Relay.revive(fn, err)
 Executes a Listener.prototype function on each pending listener.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -623,7 +622,7 @@ listeners. If no argument is present, listeners will end when they have
 processed all nodes of the list. Subsequent calls of push and end on this
 list will throw.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -634,8 +633,8 @@ list will throw.
 Return a new LaterList instance whose nodes are the result of applying the
 supplied onData function to each node of this list.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: LaterList A LaterList of the same subclass as this list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: LaterList A LaterList of the same subclass as this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -649,13 +648,13 @@ be garbage colllected. Subsequent calls of [close](#LaterList+close),
 [atIndex](#LaterList+atIndex) and adding of listeners on this list will throw as
 these methods require a reference to the list's head.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 <a name="LaterList+consume"></a>
 ### laterList/Relay.consume(onData, initialValue) ⇒ <code>Promise.&lt;\*&gt;</code>
 Returns a promise that resolves with the final value of a listener.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -666,15 +665,15 @@ Returns a promise that resolves with the final value of a listener.
 ### laterList/Relay.value() ⇒ <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code>
 Collect the nodes of the list as an array.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.
 <a name="LaterList+atIndex"></a>
 ### laterList/Relay.atIndex(index) ⇒ <code>\*</code>
 Looks up the value of the node at the supplied index. Returns undefined if
 the index is not a number or out of bounds.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>\*</code> - The value of the node at that index.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>\*</code> - The value of the node at that index.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -685,15 +684,15 @@ the index is not a number or out of bounds.
 Resolves with undefined if the list ends without error, rejects if the list
 ends with an error.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 <a name="LaterList+concat"></a>
 ### laterList/Relay.concat(...lists) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a new list comprised of the list on which it is called joined with
 the list-like(s) and/or value(s) provided as arguments.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A list whose nodes have the concatenated values of the
-                    supplied arguments.  
+                    supplied arguments.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -704,9 +703,9 @@ the list-like(s) and/or value(s) provided as arguments.
 Tests whether all nodes in the list pass the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for all nodes in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -718,8 +717,8 @@ provided function.
 Creates a new LaterList with all nodes that pass the test implemented by
 the provided function.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -731,8 +730,8 @@ the provided function.
 Returns a value in the list, if a node in the list satisfies the provided
 testing function. Otherwise undefined is returned.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -744,9 +743,9 @@ testing function. Otherwise undefined is returned.
 Returns an index in the list, if a node in the list satisfies the provided
 testing function. Otherwise -1 is returned.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 **Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node satisfying the
-                          predicate.  
+                          predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -757,8 +756,8 @@ testing function. Otherwise -1 is returned.
 ### laterList/Relay.forEach(lambda, thisArg) ⇒ <code>Promise.&lt;undefined&gt;</code>
 Executes a provided function once per node.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -770,8 +769,8 @@ Executes a provided function once per node.
 Determines whether a list includes a certain element, returning true or
 false as appropriate.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -783,8 +782,8 @@ false as appropriate.
 Returns the first index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -794,7 +793,7 @@ Returns the first index at which a given value can be found in the list, or
 ### laterList/Relay.join(separator) ⇒ <code>Promise.&lt;String&gt;</code>
 Joins all values of a list into a string.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -805,8 +804,8 @@ Joins all values of a list into a string.
 Returns the last index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -817,9 +816,9 @@ Returns the last index at which a given value can be found in the list, or
 Creates a new list with the results of calling a provided function on every
 node in this list.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A new list with the results of mapping the lambda over
-                    this list.  
+                    this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -831,8 +830,8 @@ node in this list.
 Applies a function against an accumulator and each node of the list (from
 left-to-right) has to reduce it to a single value.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -846,8 +845,8 @@ right-to-left) has to reduce it to a single value. Note that this operation
 can only commence when the list has ended and been reversed. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -861,14 +860,14 @@ becomes the first. Note that while this operation maintains a copy of each
 node and can only complete when the list has ended. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.
 <a name="LaterList+slice"></a>
 ### laterList/Relay.slice(begin, end) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a shallow copy of a portion of a list into a new list.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -880,9 +879,9 @@ Returns a shallow copy of a portion of a list into a new list.
 Tests whether some element in the list passes the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for some node in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -897,8 +896,8 @@ values of the list collected in an array before they are sorted and copied
 to the resulting list. As this is computationally expensive, finding other
 approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -909,8 +908,8 @@ approaches is recommended.
 Returns a new list with some nodes in this list removed and/or some nodes
 added.
 
-**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.  
+**Kind**: instance method of <code>[LaterList/Relay](#LaterList/Relay)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -969,7 +968,7 @@ values. There are however some differences that make LaterList useful.
   </li>
 </ul>
 
-**Kind**: global class  
+**Kind**: global class
 
 * [LaterList](#LaterList)
   * _instance_
@@ -1009,13 +1008,13 @@ values. There are however some differences that make LaterList useful.
 ### laterList.length : <code>Number</code>
 Number of nodes in the list.
 
-**Kind**: instance property of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance property of <code>[LaterList](#LaterList)</code>
 <a name="LaterList+push"></a>
 ### laterList.push(...values) ⇒ <code>Number</code>
 Adds a values to the list's tail. Pending listeners are revived and shifted.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Number</code> - The new length of the list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Number</code> - The new length of the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1025,7 +1024,7 @@ Adds a values to the list's tail. Pending listeners are revived and shifted.
 ### laterList.revive(fn, err)
 Executes a Listener.prototype function on each pending listener.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1040,7 +1039,7 @@ listeners. If no argument is present, listeners will end when they have
 processed all nodes of the list. Subsequent calls of push and end on this
 list will throw.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1051,8 +1050,8 @@ list will throw.
 Return a new LaterList instance whose nodes are the result of applying the
 supplied onData function to each node of this list.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: LaterList A LaterList of the same subclass as this list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: LaterList A LaterList of the same subclass as this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1066,13 +1065,13 @@ be garbage colllected. Subsequent calls of [close](#LaterList+close),
 [atIndex](#LaterList+atIndex) and adding of listeners on this list will throw as
 these methods require a reference to the list's head.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 <a name="LaterList+consume"></a>
 ### laterList.consume(onData, initialValue) ⇒ <code>Promise.&lt;\*&gt;</code>
 Returns a promise that resolves with the final value of a listener.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The result of the computation of the listener.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1083,15 +1082,15 @@ Returns a promise that resolves with the final value of a listener.
 ### laterList.value() ⇒ <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code>
 Collect the nodes of the list as an array.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;Array.&lt;\*&gt;&gt;</code> - Resolves with the values of the list's nodes.
 <a name="LaterList+atIndex"></a>
 ### laterList.atIndex(index) ⇒ <code>\*</code>
 Looks up the value of the node at the supplied index. Returns undefined if
 the index is not a number or out of bounds.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>\*</code> - The value of the node at that index.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>\*</code> - The value of the node at that index.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1102,15 +1101,15 @@ the index is not a number or out of bounds.
 Resolves with undefined if the list ends without error, rejects if the list
 ends with an error.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 <a name="LaterList+concat"></a>
 ### laterList.concat(...lists) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a new list comprised of the list on which it is called joined with
 the list-like(s) and/or value(s) provided as arguments.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A list whose nodes have the concatenated values of the
-                    supplied arguments.  
+                    supplied arguments.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1121,9 +1120,9 @@ the list-like(s) and/or value(s) provided as arguments.
 Tests whether all nodes in the list pass the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for all nodes in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1135,8 +1134,8 @@ provided function.
 Creates a new LaterList with all nodes that pass the test implemented by
 the provided function.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the filtered values of the original list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1148,8 +1147,8 @@ the provided function.
 Returns a value in the list, if a node in the list satisfies the provided
 testing function. Otherwise undefined is returned.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The value of the first node to satisfy the predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1161,9 +1160,9 @@ testing function. Otherwise undefined is returned.
 Returns an index in the list, if a node in the list satisfies the provided
 testing function. Otherwise -1 is returned.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 **Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node satisfying the
-                          predicate.  
+                          predicate.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1174,8 +1173,8 @@ testing function. Otherwise -1 is returned.
 ### laterList.forEach(lambda, thisArg) ⇒ <code>Promise.&lt;undefined&gt;</code>
 Executes a provided function once per node.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;undefined&gt;</code> - Resolves when processing has ended.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1187,8 +1186,8 @@ Executes a provided function once per node.
 Determines whether a list includes a certain element, returning true or
 false as appropriate.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the value appears in the list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1200,8 +1199,8 @@ false as appropriate.
 Returns the first index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The first index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1211,7 +1210,7 @@ Returns the first index at which a given value can be found in the list, or
 ### laterList.join(separator) ⇒ <code>Promise.&lt;String&gt;</code>
 Joins all values of a list into a string.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1222,8 +1221,8 @@ Joins all values of a list into a string.
 Returns the last index at which a given value can be found in the list, or
 -1 if it is not present.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;Number&gt;</code> - The last index of a node with the supplied value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1234,9 +1233,9 @@ Returns the last index at which a given value can be found in the list, or
 Creates a new list with the results of calling a provided function on every
 node in this list.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 **Returns**: <code>[LaterList](#LaterList)</code> - A new list with the results of mapping the lambda over
-                    this list.  
+                    this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1248,8 +1247,8 @@ node in this list.
 Applies a function against an accumulator and each node of the list (from
 left-to-right) has to reduce it to a single value.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1263,8 +1262,8 @@ right-to-left) has to reduce it to a single value. Note that this operation
 can only commence when the list has ended and been reversed. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>Promise.&lt;\*&gt;</code> - The reduced value.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1278,14 +1277,14 @@ becomes the first. Note that while this operation maintains a copy of each
 node and can only complete when the list has ended. As this is
 computationally expensive, finding other approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the values of this list reversed.
 <a name="LaterList+slice"></a>
 ### laterList.slice(begin, end) ⇒ <code>[LaterList](#LaterList)</code>
 Returns a shallow copy of a portion of a list into a new list.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A list with the sliced portion of this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1297,9 +1296,9 @@ Returns a shallow copy of a portion of a list into a new list.
 Tests whether some element in the list passes the test implemented by the
 provided function.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - true if the predicate is true for some node in
-                           the list, false otherwise.  
+                           the list, false otherwise.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1314,8 +1313,8 @@ values of the list collected in an array before they are sorted and copied
 to the resulting list. As this is computationally expensive, finding other
 approaches is recommended.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with sorted values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1326,8 +1325,8 @@ approaches is recommended.
 Returns a new list with some nodes in this list removed and/or some nodes
 added.
 
-**Kind**: instance method of <code>[LaterList](#LaterList)</code>  
-**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.  
+**Kind**: instance method of <code>[LaterList](#LaterList)</code>
+**Returns**: <code>[LaterList](#LaterList)</code> - A new list with the modified values from this list.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1340,9 +1339,9 @@ added.
 Creates a new LaterList instance from an list-like object with a forEach
 method. The new list ends when the execution of forEach resolves.
 
-**Kind**: static method of <code>[LaterList](#LaterList)</code>  
+**Kind**: static method of <code>[LaterList](#LaterList)</code>
 **Returns**: LaterList An instance of LaterList whose nodes have values equal to
-                    those of the supplied list-like.  
+                    those of the supplied list-like.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1354,9 +1353,9 @@ method. The new list ends when the execution of forEach resolves.
 ### LaterList.of(...values) ⇒
 Creates a new LaterList instance with a variable number of arguments.
 
-**Kind**: static method of <code>[LaterList](#LaterList)</code>  
+**Kind**: static method of <code>[LaterList](#LaterList)</code>
 **Returns**: LaterList An instance of LaterList whose nodes have values equal to
-                    those of the supplied arguments.  
+                    those of the supplied arguments.
 
 | Param | Type | Description |
 | --- | --- | --- |

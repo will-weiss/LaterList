@@ -11,7 +11,8 @@ npm install LaterList
 ```
 
 # Usage
-<code>var Flood = require('LaterList').Flood
+```javascript
+var Flood = require('LaterList').Flood
 
 // Works like an array
 Flood.of(1,2,3,4,5)
@@ -29,9 +30,7 @@ Flood.from(someUserIds)
   .reduce(function(pageViews, user) {
     return pageViews + user.pageViews;
   }, 0).then(console.log) // Sum total of page views of those users.
-
-</code>
-
+```
 
 # Source
 
