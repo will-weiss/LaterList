@@ -4,13 +4,6 @@
  */
 
 "use strict";
-var fs = require("fs");
-var gulp = require("gulp");
-var gutil = require("gulp-util");
-var gulpJsdoc2md = require("gulp-jsdoc-to-markdown");
-var concat = require("gulp-concat");
-var mergeStream = require('merge-stream')
-
 
 var browserify = require('browserify'),
   gulp = require('gulp'),
@@ -18,10 +11,14 @@ var browserify = require('browserify'),
   uglify = require('gulp-uglify'),
   rename = require('gulp-rename'),
   path = require('path'),
-  coverageEnforcer = require("gulp-istanbul-enforcer"),
   istanbul = require('gulp-istanbul'),
   mocha = require('gulp-mocha'),
-  jsdoc = require('gulp-jsdoc');
+  fs = require("fs"),
+  gutil = require("gulp-util"),
+  gulpJsdoc2md = require("gulp-jsdoc-to-markdown"),
+  concat = require("gulp-concat"),
+  mergeStream = require('merge-stream');
+
 
 gulp.task('dist', function() {
   // transform regular node stream to gulp (buffered vinyl) stream
@@ -64,18 +61,19 @@ gulp.task('coverage-test', function(cb) {
 });
 
 gulp.task("docs", function() {
-    var jsDocStream = gulp.src("lib/**/*.js")
-        .pipe(concat("README.md"))
-        .pipe(gulpJsdoc2md())
-        .on("error", function(err){
-            gutil.log("jsdoc2md failed:", err.message);
-        })
-
-    return mergeStream(gulp.src("./lib/README.md"), jsDocStream)
+  // Concatenate the jsdoc's and convert the documentation to markdown.
+  var jsDocStream = gulp.src("lib/**/*.js")
       .pipe(concat("README.md"))
-      .pipe(gulp.dest("./"));
+      .pipe(gulpJsdoc2md())
+      .on("error", function(err){
+          gutil.log("jsdoc2md failed:", err.message);
+      });
 
+  // Concatenate the existing README with the generated jsdoc markdown.
+  return mergeStream(gulp.src("./lib/README.md"), jsDocStream)
+    .pipe(concat("README.md"))
+    .pipe(gulp.dest("./"));
 });
 
 
-gulp.task('default', ['dist']);
+gulp.task('default', ['docs', 'dist']);
