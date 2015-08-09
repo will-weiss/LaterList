@@ -48,6 +48,7 @@
     "jsdoc": "^3.3.2",
     "jsdoc-oblivion": "0.0.4",
     "jsdoc-to-markdown": "^1.1.1",
+    "merge-stream": "^0.1.8",
     "mocha": "2.1.0",
     "sinon": "1.15.4",
     "sinon-as-promised": "^4.0.0",

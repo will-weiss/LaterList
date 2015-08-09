@@ -9,6 +9,7 @@ var gulp = require("gulp");
 var gutil = require("gulp-util");
 var gulpJsdoc2md = require("gulp-jsdoc-to-markdown");
 var concat = require("gulp-concat");
+var mergeStream = require('merge-stream')
 
 
 var browserify = require('browserify'),
@@ -62,37 +63,19 @@ gulp.task('coverage-test', function(cb) {
     });
 });
 
-gulp.task('doc', function() {
-  gulp.src(["./lib/**/*.js", "README.md"])
-    .pipe(jsdoc.parser())
-    .pipe(jsdoc.generator('./docs', {
-      path: './node_modules/jsdoc-oblivion/template',
-      "systemName"      : "LaterList",
-      "footer"          : "",
-      "navType"         : "vertical",
-      "theme"           : "oblivion",
-      "linenums"        : true,
-      "collapseSymbols" : false,
-      "inverseNav"      : true
-    }, {
-      "recurse": true,
-      "cleverLinks": true,
-      "monospaceLinks": false,
-      "default": {
-        "outputSourceFiles": true
-      },
-    }))
-});
-
-
 gulp.task("docs", function() {
-    return gulp.src("lib/**/*.js")
-        .pipe(concat("all.md"))
+    var jsDocStream = gulp.src("lib/**/*.js")
+        .pipe(concat("README.md"))
         .pipe(gulpJsdoc2md())
         .on("error", function(err){
             gutil.log("jsdoc2md failed:", err.message);
         })
-        .pipe(gulp.dest("api"));
+
+    return mergeStream(gulp.src("./lib/README.md"), jsDocStream)
+      .pipe(concat("README.md"))
+      .pipe(gulp.dest("./"));
+
 });
+
 
 gulp.task('default', ['dist']);
