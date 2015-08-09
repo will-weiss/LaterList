@@ -1,4 +1,4 @@
-# LaterList
+# LaterList [![Build Status](https://travis-ci.org/will-weiss/LaterList.svg?branch=master)](https://travis-ci.org/will-weiss/LaterList)
 
 Handle asynchronous events as an array that will arrive eventually: a LaterList.
 
