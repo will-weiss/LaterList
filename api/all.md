@@ -24,7 +24,7 @@ npm install LaterList
 # Source
 [https://github.com/will-weiss/LaterList](https://github.com/will-weiss/LaterList)
 # License
-Released under the MIT License.</a> : <code>Object</code></dt>
+Released under the MIT License.</a></dt>
 <dd></dd>
 </dl>
 ## Classes
@@ -111,7 +111,7 @@ npm install LaterList
 # Source
 [https://github.com/will-weiss/LaterList](https://github.com/will-weiss/LaterList)
 # License
-Released under the MIT License. : <code>Object</code>
+Released under the MIT License.
 <a name="LaterList/Flood"></a>
 ## LaterList/Flood ⇐ <code>[LaterList](#LaterList)</code>
 A Flood is a LaterList for which values are processed immediately.
