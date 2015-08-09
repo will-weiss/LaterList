@@ -7,12 +7,12 @@ Handle asynchronous events as an array that will arrive eventually: a LaterList.
 Available via [npm](https://www.npmjs.org/)
 
 ```bash
-npm install LaterList
+npm install laterlist
 ```
 
 # Usage
 ```javascript
-var Flood = require('LaterList').Flood
+var Flood = require('LaterList').Flood;
 
 // Works like an array
 Flood.of(1,2,3,4,5)
@@ -22,14 +22,14 @@ Flood.of(1,2,3,4,5)
     return n % 2 === 0;
   }).reduce(function(total, n) {
     return total + n;
-  }, 0).then(console.log) // 10
+  }, 0).then(console.log); // 10
 
 // even when callbacks resolve asynchronously
 Flood.from(someUserIds)
   .map(db.getUserByIdAsync)
   .reduce(function(pageViews, user) {
     return pageViews + user.pageViews;
-  }, 0).then(console.log) // Sum total of page views of those users.
+  }, 0).then(console.log); // Sum total of page views of those users.
 ```
 
 # Source

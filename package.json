@@ -1,5 +1,5 @@
 {
-  "name": "LaterList",
+  "name": "laterlist",
   "version": "1.0.0",
   "description": "LaterList: Eventual Arrays with a Familiar API",
   "main": "lib/index.js",
