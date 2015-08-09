@@ -11,7 +11,8 @@ var browserify = require('browserify'),
   path = require('path'),
   coverageEnforcer = require("gulp-istanbul-enforcer"),
   istanbul = require('gulp-istanbul'),
-  mocha = require('gulp-mocha');
+  mocha = require('gulp-mocha'),
+  jsdoc = require('gulp-jsdoc');
 
 gulp.task('dist', function() {
   // transform regular node stream to gulp (buffered vinyl) stream
@@ -51,6 +52,28 @@ gulp.task('coverage-test', function(cb) {
             });
         });
     });
+});
+
+gulp.task('doc', function() {
+  gulp.src(["./lib/**/*.js", "README.md"])
+    .pipe(jsdoc.parser())
+    .pipe(jsdoc.generator('./docs', {
+      path: './node_modules/jsdoc-oblivion/template',
+      "systemName"      : "LaterList",
+      "footer"          : "",
+      "navType"         : "vertical",
+      "theme"           : "oblivion",
+      "linenums"        : true,
+      "collapseSymbols" : false,
+      "inverseNav"      : true
+    }, {
+      "recurse": true,
+      "cleverLinks": true,
+      "monospaceLinks": false,
+      "default": {
+        "outputSourceFiles": true
+      },
+    }))
 });
 
 gulp.task('default', ['dist']);
